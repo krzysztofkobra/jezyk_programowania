@@ -1,7 +1,9 @@
 #include <iostream>
 #include "lexer.h"
 #include "parser.h"
+#include "interpreter.h"
 #include <cassert>
+#include <vector>
 
 // g++ main.cpp lexer.cpp -o program, ./program
 
@@ -12,7 +14,7 @@ int main()
 {
     INIT_RESERVED_IDENTIFIER();
 
-    std::string sourceCode = "let x = 42 + 3";
+    std::string sourceCode = "(42 + 3)";
     std::vector<Token> tokens = tokenize(sourceCode);
 
     std::cout << "Tokens: " << std::endl;
@@ -21,17 +23,20 @@ int main()
         std::string tokenTypeName = getTokenTypeName(token.type); 
         std::cout << tokenTypeName << "(" << token.value << ")" << std::endl;
     }
+
     //Tokenizer("let x = 42 + 3");
     std::string getTokenTypeName(TokenType type);
+
     Expression* expression = parse(tokens);
-    std::cout << parse(tokens);
+    MathInterpreter interpreter(tokens);
+    double result = interpreter.interpret();
+    std::cout << "Result: " << result << std::endl;
+
     return 0;
 }
 
-void Tokenizer(std::string src)
+void Tokenizer(std::string sourceCode)
 {
-    std::string sourceCode = src; 
-
     std::vector<Token> tokens = tokenize(sourceCode);
 
     std::cout << "Tokens: " << std::endl;

@@ -2,6 +2,9 @@
 #define PARSER_H
 
 #include "lexer.h"
+#include <iostream>
+#include <stdexcept>
+#include <vector>
 
 class Expression 
 {

@@ -1,7 +1,8 @@
-#include "parser.h"
+#include "interpreter.h"
 #include "lexer.h"
-#include <iostream>
+#include "parser.h"
 #include <stdexcept>
+#include <iostream>
 
 Expression* parse(const std::vector<Token>& tokens) 
 {
@@ -75,8 +76,7 @@ Expression* parseExpression(size_t& pos, const std::vector<Token>& tokens)
             return new BinaryOperatorExpression(op, left, right);
         }
         case TokenType::LET:
-        {
-            Expression* expression = parseExpression(pos, tokens);
+        { 
             return parseLet(pos, tokens);
         }
         default:
